@@ -51,7 +51,7 @@ public class Graph<N> {
      * @effects add a childNode to the childrinns of fatherNode.
      * @modifies modify the ArrayList.
      */
-    public void addEdge(Node<T> fatherNode, Node<T> childNode) {
+    public void addEdge(N fatherNode, N childNode) {
         // TODO Implement this method
     }
 
@@ -66,7 +66,7 @@ public class Graph<N> {
      * print the node childerns in the graph.
      * @requiers a valid father nodes.
      */
-    public void printNodeChilderns(Node<T> node) {
+    public void printNodeChilderns(N node) {
         // TODO Implement this method
     }
 
@@ -74,7 +74,7 @@ public class Graph<N> {
      * prit shortest path between two nodes.
      * @requiers a valid two list of nodes.
      */
-    public void shotrtestPath(ArrayList<Node<T>> from, ArrayList<Node<T>> to) {
+    public void shotrtestPath(ArrayList<N> from, ArrayList<N> to) {
         // TODO Implement this method
     }
 
