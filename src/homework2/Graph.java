@@ -1,5 +1,7 @@
 package homework2;
 
+import java.util.ArrayList;
+
 /**
  * A Graph is a directed graph, it contains nodes that connected to each other
  * with directed edges.
@@ -17,24 +19,62 @@ package homework2;
  * </pre>
  **/
 
-public class Graph {
-    String name;
+public class Graph<N> {
+    private String name;
+    private ArrayList<N> nodes;
     // TODO Write abstraction function and representation invariant
+
     /**
      * Constructs Graph .
-     * @requires a nun empty name string.
+     *
+     * @requires name != null
      * @effects constructs a Graph from a none empty name.
      **/
     public Graph(String name) {
-        // TODO Implement this constructor
+        this.name = name;
+        this.nodes = new ArrayList<N>();
     }
 
     /**
      * add a node to the graph.
-     * @requiers a none negative cost and none empty string name.
-     * @effects add a node to the
+     * @requiers node != null.
+     * @effects add a node to the Graph.
+     * @modifies modify the ArrayList.
      */
-    public void addNode(String nodeName, int cost) {
+    public void addNode(N node) {
+        this.nodes.add(node);
+    }
+
+    /**
+     * add an edge to the graph.
+     * @requiers a valid two nodes.
+     * @effects add a childNode to the childrinns of fatherNode.
+     * @modifies modify the ArrayList.
+     */
+    public void addEdge(Node<T> fatherNode, Node<T> childNode) {
+        // TODO Implement this method
+    }
+
+    /**
+     * print the nodes in the graph.
+     */
+    public void printNodes() {
+        // TODO Implement this method
+    }
+
+    /**
+     * print the node childerns in the graph.
+     * @requiers a valid father nodes.
+     */
+    public void printNodeChilderns(Node<T> node) {
+        // TODO Implement this method
+    }
+
+    /**
+     * prit shortest path between two nodes.
+     * @requiers a valid two list of nodes.
+     */
+    public void shotrtestPath(ArrayList<Node<T>> from, ArrayList<Node<T>> to) {
         // TODO Implement this method
     }
 
