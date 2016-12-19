@@ -19,7 +19,7 @@ import java.util.Iterator;
 * </pre>
 */
 
-public class Node<T>  {
+public class Node<T> implements Comparable<Node> {
     private final String name;          //the node name
     private final int cost;             //the node cost
     ArrayList<Node<T>> children;  //the nodes that this has a direct edge to.
@@ -38,18 +38,46 @@ public class Node<T>  {
     }
 
     /**
+     * get name
+     * @effect   : return the node name.
+     **/
+    public String getName() {
+        return name;
+    }
+
+    /**
     * Add a new child.
     * @requiers : child != null.
-    * @modified : append the new child to the children list.
+    * @effect  : append the new child to the children list.
     **/
     public void addChild(Node<T> child) {
         this.children.add(child);
     }
 
     /**
-    * @return : an iterator for node children.
+    *
+     * @effect : return a iterator for the graph nodes
     **/
     public Iterator<Node<T>> chilerdenIterator() {
         return children.iterator();
     }
+
+    /**
+     * Compares this with the specified object for order.
+     * @return a negative integer, zero, or a positive integer as this
+     * 		   object is respectively less than, equal to, or greater than
+     *         the specified object .
+     * 		   <p>
+     * 		   WeightedNodes are ordered lexicographically by their name.
+     * 		   When two nodes share a name, their ordering is determined by
+     * 		   the numeric ordering of their costs.
+     */
+    public int compareTo(Node o) {
+        int c = name.compareTo(o.name);
+        if (c == 0)
+            return cost - o.cost;
+        else
+            return c;
+    }
+
 }

@@ -1,6 +1,8 @@
 package homework2;
 
+import javax.xml.soap.*;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * A Graph is a directed graph, it contains nodes that connected to each other
@@ -19,9 +21,9 @@ import java.util.ArrayList;
  * </pre>
  **/
 
-public class Graph<N> {
+public class Graph {
     private String name;
-    private ArrayList<N> nodes;
+    private ArrayList<Node> nodes;
     // TODO Write abstraction function and representation invariant
 
     /**
@@ -32,49 +34,57 @@ public class Graph<N> {
      **/
     public Graph(String name) {
         this.name = name;
-        this.nodes = new ArrayList<N>();
+        this.nodes = new ArrayList<Node>();
     }
 
     /**
      * add a node to the graph.
      * @requiers node != null.
-     * @effects add a node to the Graph.
-     * @modifies modify the ArrayList.
+     * @effects  add a node to the Graph, keep the nodes sorted by there names.
      */
-    public void addNode(N node) {
+    public void addNode(Node node) {
         this.nodes.add(node);
+        Collections.sort(nodes);
     }
 
     /**
      * add an edge to the graph.
-     * @requiers a valid two nodes.
-     * @effects add a childNode to the childrinns of fatherNode.
-     * @modifies modify the ArrayList.
+     * @requiers fatherNode != null and childNode != null.
+     * @effects  add a new edge, from father to child nodes to the graph.
+     * @modifies modify the father to has a new child,
+     * in the case that one of the nodes isn't in the graph, the graph and the nodes will not effected.
      */
-    public void addEdge(N fatherNode, N childNode) {
-        // TODO Implement this method
+    public void addEdge(Node fatherNode, Node childNode) {
+        if(!nodes.contains(fatherNode) || !nodes.contains(childNode)) {
+            return; //TODO: check what to print in the case oof input error
+        }
+        fatherNode.addChild(childNode);
     }
 
     /**
      * print the nodes in the graph.
+     * @effect: prints the nodes of the graph
      */
     public void printNodes() {
-        // TODO Implement this method
+        System.out.print(name + " contains: ");
+        for(Node node : nodes) {
+            System.out.print(node.getName() + " ");
+        }
     }
 
     /**
-     * print the node childerns in the graph.
+     * print the node childrens in the graph.
      * @requiers a valid father nodes.
      */
-    public void printNodeChilderns(N node) {
-        // TODO Implement this method
+    public void printNodeChildrens(Node node) {
+
     }
 
     /**
      * prit shortest path between two nodes.
      * @requiers a valid two list of nodes.
      */
-    public void shotrtestPath(ArrayList<N> from, ArrayList<N> to) {
+    public void shotrtestPath(ArrayList<Node> from, ArrayList<N> to) {
         // TODO Implement this method
     }
 
