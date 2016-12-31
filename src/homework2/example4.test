@@ -1,0 +1,62 @@
+#multiple Graph and same nodes in each graph
+#create some graphs
+CreateGraph A
+CreateGraph B
+CreateGraph C
+
+#create some nodes
+CreateNode n1 1
+CreateNode n2 2
+CreateNode n3 3
+CreateNode n4 4
+CreateNode n5 5
+CreateNode n6 6
+CreateNode n7 7
+CreateNode n8 8
+
+#add nodes to the graph
+AddNode A n1
+AddNode A n2
+AddNode A n3
+AddNode A n4
+AddNode A n5
+AddNode B n1
+AddNode B n2
+AddNode B n3
+AddNode C n1
+AddNode C n7
+AddNode C n8
+
+#add edges to some graph
+AddEdge A n1 n5
+AddEdge A n1 n5
+AddEdge A n1 n3
+AddEdge A n1 n2
+AddEdge A n2 n4
+AddEdge A n4 n3
+AddEdge A n1 n3
+AddEdge A n8 n7
+
+#find some paths in Graph A
+FindPath A n3 -> n4 n2
+FindPath A n1 -> n3 n2
+
+#add some edge to graph B
+AddEdge B n1 n3
+AddEdge B n4 n1
+AddEdge B n5 n6
+AddEdge B n1 n1
+FindPath B n7 n8 n4 -> n1 n2 n3
+FindPath B n1 -> n1
+
+#add some edge to graph C
+AddEdge C n1 n1
+AddEdge C n1 n7
+AddEdge C n1 n8
+AddEdge C n7 n1
+AddEdge C n7 n7
+AddEdge C n7 n8
+AddEdge C n8 n1
+AddEdge C n8 n7
+AddEdge C n8 n8
+FindPath n1 n7 n8 -> n1 n7 n8

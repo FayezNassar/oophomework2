@@ -1,8 +1,6 @@
 package homework2;
 
-import javax.xml.soap.*;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 
 /**
  * A Graph is a directed graph, it contains nodes that connected to each other
@@ -17,14 +15,39 @@ import java.util.Collections;
  * <b>The following fields are used in the specification:</b>
  * <pre>
  *   name :  string           // the Graph instance name
- *   nodes        // longitude measured in degrees
+ *   nodes                    // the node that the Graph instance has
  * </pre>
  **/
 
-public class Graph {
-    private String name;
-    private ArrayList<Node> nodes;
-    // TODO Write abstraction function and representation invariant
+public class Graph<Node> {
+    private final String name;
+//    private final ArrayList<Node> nodes;
+    private final Map<Node, ArrayList<Node>> nodes;
+
+    /* Abstract Function:
+    * A Graph g is not in the world
+    * if the name is not valid,
+    * if the nodes and the edge is legal, g=(nodes, edges) is out graph in our world.
+    * */
+
+    /*
+    * Representation invariant for every graph g:
+    * each node in his nodes is valid node(!=null).
+    * each node have a list of childrens(list!=null), each child node is exist in the graph.
+    * each node is presents once, and also the edges.
+    * */
+
+    private void checkRep() {
+        assert this.name != null :
+                "Name is null";
+        for (Node node : nodes.keySet()) {
+            ArrayList<Node> children = nodes.get(node);
+            for (Node child : children) {
+                assert nodes.containsKey(child) :
+                        "node: " + node.toString() + " has a child: " + child.toString() + " that doesn't exist in the graph";
+            }
+        }
+    }
 
     /**
      * Constructs Graph .
@@ -34,58 +57,63 @@ public class Graph {
      **/
     public Graph(String name) {
         this.name = name;
-        this.nodes = new ArrayList<Node>();
+//        this.nodes = new ArrayList<Node>();
+        nodes = new HashMap<Node, ArrayList<Node>>();
+        checkRep();
     }
 
     /**
      * add a node to the graph.
-     * @requiers node != null.
-     * @effects  add a node to the Graph, keep the nodes sorted by there names.
+     *
+     * @requiers node != null
+     * @effects add a node to the Graph, keep the nodes sorted by there names.
      */
     public void addNode(Node node) {
-        this.nodes.add(node);
-        Collections.sort(nodes);
+        if (nodes.containsKey(node)) {
+            return;
+        }
+        nodes.put(node, new ArrayList<Node>());
+        checkRep();
     }
 
     /**
      * add an edge to the graph.
+     *
      * @requiers fatherNode != null and childNode != null.
-     * @effects  add a new edge, from father to child nodes to the graph.
+     * @effects add a new edge, from father to child nodes to the graph.
      * @modifies modify the father to has a new child,
      * in the case that one of the nodes isn't in the graph, the graph and the nodes will not effected.
      */
+
     public void addEdge(Node fatherNode, Node childNode) {
-        if(!nodes.contains(fatherNode) || !nodes.contains(childNode)) {
-            return; //TODO: check what to print in the case oof input error
+        if (!nodes.containsKey(fatherNode) || !nodes.containsKey(childNode)) {
+            return;
         }
-        fatherNode.addChild(childNode);
-    }
-
-    /**
-     * print the nodes in the graph.
-     * @effect: prints the nodes of the graph
-     */
-    public void printNodes() {
-        System.out.print(name + " contains: ");
-        for(Node node : nodes) {
-            System.out.print(node.getName() + " ");
+        ArrayList<Node> fatherChildren = nodes.get(fatherNode);
+        if (!fatherChildren.contains(childNode)) {
+            fatherChildren.add(childNode);
         }
+        checkRep();
     }
 
     /**
-     * print the node childrens in the graph.
-     * @requiers a valid father nodes.
+     * @return: return iterator for the nodes, that start from the first node.
      */
-    public void printNodeChildrens(Node node) {
-
+    public Iterator<Node> getNodesIterator() {
+        return nodes.keySet().iterator();
     }
 
     /**
-     * prit shortest path between two nodes.
-     * @requiers a valid two list of nodes.
-     */
-    public void shotrtestPath(ArrayList<Node> from, ArrayList<N> to) {
-        // TODO Implement this method
+     * @requiers: node != null
+     * @return: if the node in the graph, return iterator for the given node children in the graph
+     *          otherwise, return an empty iterator.
+    * */
+    public Iterator<Node> getNodeChildrenIterator(Node node) {
+        if(nodes.containsKey(node)) {
+            return nodes.get(node).iterator();
+        } else {
+            return Collections.emptyIterator();
+        }
     }
 
 }
